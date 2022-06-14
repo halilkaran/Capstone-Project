@@ -3,12 +3,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from dj_rest_auth.serializers import TokenSerializer
 
+from users.models import Profile
+
 
 class RegisterSerializer(serializers.ModelSerializer):
-
-
     
-    email = serializers.EmailField(
+    username = serializers.EmailField(
         required = True,
         validators = [validators.UniqueValidator(queryset=User.objects.all())]
     )
@@ -30,7 +30,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = User
         fields = [
             "username",
-            "email",
             "first_name",
             "last_name",
             "password",
@@ -54,8 +53,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-
-
 class UserTokenSerizalizer(serializers.ModelSerializer):
     
     class Meta:
@@ -69,3 +66,9 @@ class CustomTokenSerializer(TokenSerializer):
     
     class Meta(TokenSerializer.Meta):
         fields = ("key", "user")
+
+class ProfileSerializer(serializers.ModelSerializer) :
+    class Meta:
+        model = Profile
+        fields = "__all__"
+        

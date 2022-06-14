@@ -10,6 +10,7 @@ class BlogSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blog
         fields = (
+        "id",
         "title", 
         "content", 
         "image", 
@@ -22,4 +23,3 @@ class BlogSerializer(serializers.ModelSerializer):
         "view_count",         
         "like_count",
         )
-        
