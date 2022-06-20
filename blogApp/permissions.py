@@ -1,13 +1,4 @@
 from rest_framework import permissions
-
-class IsAdminOrReadOnly(permissions.IsAdminUser):
-    def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
-            return True
-        else:
-            return bool(request.user and request.user.is_staff)
-
-
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
     Object-level permission to only allow owners of an object to edit it.
@@ -22,3 +13,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
         # Instance must have an attribute named `owner`.
         return obj.author == request.user
+
+class IsAuthenticated(permissions.IsAuthenticated) :
+    def has_permission(self, request, view):
+        return bool(request.user and request.user.is_authenticated)
